@@ -24,6 +24,28 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hpInst, LPSTR lpCmd, int nCmd)
 	wc.hIconSm = NULL;								//縮小アイコンのハンドル
 	if (RegisterClassEx(&wc) == 0) return 0;
 
+	// ウィンドウの作成
+	HWND hWnd = CreateWindowEx(0, _T("__MyTest Windwo"),
+		_T("	テストウィンドウ"),
+		WS_OVERLAPPED | WS_SYSMENU | WS_MINIMIZEBOX,
+		100, 100, 400, 400,
+		NULL, NULL, hInst, NULL);
+	if (hWnd == NULL) return 0;
+	ShowWindow(hWnd, nCmd);
+	UpdateWindow(hWnd);
+
+	MSG msg;
+	BOOL bRet;
+	while ((bRet = GetMessage(&msg, NULL, 0, 0)) != 0) {
+		if (bRet == -1) {
+			break;
+		}
+		else {
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+	}
+
 	return 0;
 };
 
